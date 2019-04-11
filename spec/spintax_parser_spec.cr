@@ -10,7 +10,6 @@ Spec2.describe SpintaxParser do
   let(:spintax_pattern) { SpintaxParser::SPINTAX_PATTERN }
 
   describe "calling unspin" do
-
     context "on plaintext" do
       it "does not change the plaintext" do
         plaintext.unspin

@@ -3,7 +3,6 @@ require "ecr/processor"
 require "./calculator/parser"
 
 module SpintaxParser
-
   SPINTAX_PATTERN = /\{([^{}]*)\}/
 
   def unspin(random = Random::DEFAULT)
@@ -39,6 +38,6 @@ module SpintaxParser
   end
 
   private def parse_the_spintax_in(spun, random = Random::DEFAULT)
-    spun.gsub(SPINTAX_PATTERN) { $1.split("|",-1).sample(1, random) }
+    spun.gsub(SPINTAX_PATTERN) { $1.split("|", -1).sample(1, random) }
   end
 end

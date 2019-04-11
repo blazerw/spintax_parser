@@ -21,23 +21,23 @@ class Lexer
       @input = @input.not_nil!.lstrip
 
       case @input
-        when /\A\+/ then
-          token.kind = Token::Plus
-        when /\A-/ then
-          token.kind = Token::Minus
-        when /\A\*/ then
-          token.kind = Token::Multiply
-        when /\A\// then
-          token.kind = Token::Divide
-        when /\A\d+(\.\d+)?/
-          token.kind = Token::Number
-          token.value = $~[0].to_i32
-        when /\A\(/
-          token.kind = Token::LParen
-        when /\A\)/
-          token.kind = Token::RParen
-        when ""
-          token.kind = Token::End
+      when /\A\+/
+        token.kind = Token::Plus
+      when /\A-/
+        token.kind = Token::Minus
+      when /\A\*/
+        token.kind = Token::Multiply
+      when /\A\//
+        token.kind = Token::Divide
+      when /\A\d+(\.\d+)?/
+        token.kind = Token::Number
+        token.value = $~[0].to_i32
+      when /\A\(/
+        token.kind = Token::LParen
+      when /\A\)/
+        token.kind = Token::RParen
+      when ""
+        token.kind = Token::End
       end
 
       raise "Unknown token" if token.unknown?

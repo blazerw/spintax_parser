@@ -7,12 +7,12 @@ class Token
   Multiply = 2
   Divide   = 3
 
-  Number   = 4
+  Number = 4
 
-  LParen   = 5
-  RParen   = 6
+  LParen = 5
+  RParen = 6
 
-  End      = 7
+  End = 7
 
   property :kind
   property :value
