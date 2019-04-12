@@ -1,4 +1,7 @@
 name: spintax_parser
+description: |
+  A mixin to parse "spintax", a text format used for automated article generation. Can handle nested spintax, and can count the total number of unique variations.
+
 version: 0.1.0
 
 authors:
@@ -7,6 +10,11 @@ authors:
 crystal: 0.27.0
 
 license: MIT
+
+dependencies:
+  naive_mather:
+    github: blazerw/naive_mather
+    version: ~> 0.1
 
 development_dependencies:
   spec2:

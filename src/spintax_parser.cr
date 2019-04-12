@@ -1,10 +1,25 @@
 require "./spintax_parser/version"
-require "ecr/processor"
-require "./calculator/parser"
+require "naive_mather"
 
+# A mixin to parse "spintax", a text format used for
+# automated article generation. Can handle nested
+# spintax, and can count the total number of unique
+# variations.
+#
+# ```
+# class String
+#   include SpintaxParser
+# end
+# ```
 module SpintaxParser
   SPINTAX_PATTERN = /\{([^{}]*)\}/
 
+  # Returns the unspun version of some spintext.
+  #
+  # ```
+  # "{Fred|George} is {blue|red}.".unspin
+  #  > "Fred is red."
+  # ```
   def unspin(random = Random::DEFAULT)
     spun = dup.to_s
     while spun =~ SPINTAX_PATTERN
@@ -13,6 +28,12 @@ module SpintaxParser
     spun
   end
 
+  # Returns count of variations for spintax.
+  #
+  # ```
+  # "{Fred|George} is {blue|red}.".count_spintax_variations
+  #  > 4
+  # ```
   def count_spintax_variations
     spun = dup.to_s
     while spun =~ /([\{\|])([\|\}])/
@@ -33,11 +54,10 @@ module SpintaxParser
   end
 
   private def calc(string)
-    parser = Parser.new
-    parser.parse(string)
+    NaiveMather.calculate(string)
   end
 
   private def parse_the_spintax_in(spun, random = Random::DEFAULT)
-    spun.gsub(SPINTAX_PATTERN) { $1.split("|", -1).sample(1, random) }
+    spun.gsub(SPINTAX_PATTERN) { $1.split("|").sample(1, random).first }
   end
 end

@@ -24,8 +24,16 @@ Spec2.describe SpintaxParser do
 
     context "on spintext" do
       it "does not change the spintext" do
-        spintext.unspin
+        result = spintext.unspin
         expect(spintext).to eq "Find this. {Hello|Hi} to the {{world|worlds} out there|planet}{!|.|?} Cool."
+      end
+
+      it "leaves neither  spintext chars nor array artifacts" do
+        result = spintext.unspin
+        expect(result.index('{')).to be_nil
+        expect(result.index('}')).to be_nil
+        expect(result.index('[')).to be_nil
+        expect(result.index(']')).to be_nil
       end
 
       let(:result) { spintext.unspin }
@@ -49,11 +57,13 @@ Spec2.describe SpintaxParser do
 
   it "should count spun variations correctly" do
     expect("one {two|three} four".count_spintax_variations).to eq 2
+    expect("{Fred|George} is {blue|red}.".count_spintax_variations).to eq 4
     expect("{one|two {three|four}} five".count_spintax_variations).to eq 3
     expect("{one|two} three {four|five}".count_spintax_variations).to eq 4
     expect("one {{two|three} four|five {six|seven}} eight {nine|ten}".count_spintax_variations).to eq 8
     expect("{Hello|Hi} {{world|worlds}|planet}{!|.|?}".count_spintax_variations).to eq 18
     # expect("{one|two|}".count_spintax_variations).to eq 3
+    expect("{why|fail?|}".count_spintax_variations).to eq nil
     expect("{Can't|count|this one".count_spintax_variations).to eq nil
   end
 end
